@@ -2,9 +2,12 @@
 
 namespace App\Form;
 
+use App\Controller\BaseController;
 use App\Entity\Department;
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -15,10 +18,24 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
 {
+    protected $em;
+    protected $user;
+    private $bc;
+
+    public function __construct(EntityManagerInterface $em, BaseController $bc)
+    {
+        $this->em = $em;
+        $this->bc = $bc;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class)
+            ->add('email', EmailType::class,
+                [
+                    'label' => 'Почта',
+                    'required' => true
+                ])
             ->add('firstName', TextType::class,
                 [
                     'label' => 'Имя',
@@ -33,21 +50,34 @@ class UserType extends AbstractType
                 [
                     'label' => 'Телефон',
                     'required' => true
-                ])
-            ->add('password', PasswordType::class,
+                ]);
+            if($options['password']){
+                $builder->add('password', PasswordType::class,
+                    [
+                        'trim' => true,
+                        'mapped' => false,
+                        'label' => 'Пароль',
+                        'required' => false
+                    ]);
+            } else {
+                $builder->add('password', PasswordType::class,
+                    [
+                        'trim' => true,
+                        'mapped' => false,
+                        'label' => 'Пароль',
+                        'required' => true
+                    ]);
+            }
+
+            $builder->add('roles', ChoiceType::class,
                 [
-                    'trim' => true,
                     'mapped' => false,
-                    'label' => 'Пароль',
-                ])
-            ->add('roles', ChoiceType::class,
-                [
-                    'mapped' => false,
+                    'required' => true,
                     'label' => 'Роль',
                     'choices' => [
-                        'Администратор' => 'ROLE_ADMIN',
+//                        'Администратор' => 'ROLE_ADMIN',
                         'Менеджер' => 'ROLE_MANAGER',
-                        'Сотрудник' => 'ROLE_WORKER',
+                        'Мастер' => 'ROLE_MASTER',
                         'Курьер' => 'ROLE_COURIER',
                     ]
                 ])
@@ -55,6 +85,7 @@ class UserType extends AbstractType
                 [
                     'label' => 'Филиал',
                     'class' => Department::class,
+                    'required' => true,
 
                     // uses the User.username property as the visible option string
                     'choice_label' => 'address',
@@ -66,6 +97,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'password' => null
         ]);
     }
 }

@@ -10,10 +10,11 @@
             <tr>
                 <th class="text-center">Имя</th>
                 <th class="text-center">Фамилия</th>
-                <th class="text-center">Почта</th>
-                <th class="text-center">Телефон</th>
+                <th class="text-center">Департамент</th>
+                {#<th class="text-center">Почта</th>#}
+                {#<th class="text-center">Телефон</th>#}
                 <th class="text-center">Роль</th>
-                <th class="text-center">Последняя активность</th>
+                {#<th class="text-center">Последняя активность</th>#}
                 <th class="text-center">Действия</th>
             </tr>
         </thead>
@@ -22,10 +23,11 @@
             <tr>
                 <td>{{ user.firstName }}</td>
                 <td>{{ user.lastName }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.phone }}</td>
-                <td>{{ ('roles.' ~ (app.user.roles|first))|trans }}</td>
-                <td>{{ user.lastLogin ? user.lastLogin|date('H:i / d.m.Y') : '' }}</td>
+                <td>{{ user.department.address }}</td>
+                {#<td>{{ user.email }}</td>#}
+                {#<td>{{ user.phone }}</td>#}
+                <td>{{ ('roles.' ~ (user.roles|first))|trans }}</td>
+                {#<td>{{ user.lastLogin ? user.lastLogin|date('H:i / d.m.Y') : '' }}</td>#}
                 <td>
                     <a title="Просмотр" class="btn btn-info" href="{{ path('user_show', {'id': user.id}) }}"><i class="material-icons">remove_red_eye</i></a>
                 </td>

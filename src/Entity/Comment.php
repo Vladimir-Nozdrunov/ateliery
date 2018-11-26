@@ -18,7 +18,7 @@ class Comment
     protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Ticket", mappedBy="comments")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Ticket", inversedBy="comments")
      */
     protected $ticket;
 
@@ -33,20 +33,15 @@ class Comment
     protected $author;
 
     /**
-     * @ORM\Column(type="string")
-     */
-    protected $img;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     protected $createdAt;
 
     /**
      * Comment constructor.
-     * @param $createdAt
+     * @param User $user
      */
-    public function __construct(User $user, $createdAt)
+    public function __construct(User $user)
     {
         $this->author = $user;
         $this->createdAt = new \DateTime();
@@ -87,24 +82,24 @@ class Comment
     /**
      * @return mixed
      */
-    public function getImg()
+    public function getCreatedAt()
     {
-        return $this->img;
-    }
-
-    /**
-     * @param mixed $img
-     */
-    public function setImg($img): void
-    {
-        $this->img = $img;
+        return $this->createdAt;
     }
 
     /**
      * @return mixed
      */
-    public function getCreatedAt()
+    public function getTicket()
     {
-        return $this->createdAt;
+        return $this->ticket;
+    }
+
+    /**
+     * @param mixed $ticket
+     */
+    public function setTicket($ticket): void
+    {
+        $this->ticket = $ticket;
     }
 }

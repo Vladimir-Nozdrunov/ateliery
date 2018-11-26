@@ -69,7 +69,7 @@ class Ticket
     protected $status;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Comment", inversedBy="ticket")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="ticket", cascade={"remove"})
      */
     protected $comments;
 

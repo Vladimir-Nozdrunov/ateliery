@@ -23,3 +23,30 @@ body{
     font-weight: bold;
     color: #16a085;
 }
+
+.ticket-main-info {
+    font-style: italic;
+    font-size: 16px;
+}
+
+.ticket-comment {
+    background-color: #efefef;
+    margin: 15px 0px 15px 0px;
+    padding-bottom: 15px;
+}
+
+.comment-author {
+    font-style: italic;
+    font-size: 16px;
+    font-weight: bold;
+    padding-top: 15px;
+    color: #91a243;
+}
+
+.comment-date {
+    color: #333333;
+}
+
+.add-comment-form {
+    margin-top: 130px;
+}

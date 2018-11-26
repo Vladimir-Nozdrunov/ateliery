@@ -3,8 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Controller\BaseController;
+use App\Entity\Comment;
 use App\Entity\Status;
 use App\Entity\Ticket;
+use App\Form\CommentType;
 use App\Form\TicketType;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -84,12 +86,24 @@ class TicketController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="ticket_show", methods="GET")
+     * @Route("/{id}", name="ticket_show", methods="GET|POST", requirements={"\+d"})
+     * @param Ticket $ticket
+     * @return Response
      */
     public function show(Ticket $ticket): Response
     {
+        $comments = $ticket->getComments();
+
+        $comment = new Comment($this->getUser());
+        $form = $this->createForm(CommentType::class, $comment, [
+            'action' => $this->generateUrl('comment_add'),
+            'ticket' => $ticket->getId()
+        ]);
+
         return $this->render('admin/ticket/show.html.twig', [
             'ticket' => $ticket,
+            'comments' => $comments,
+            'form' => $form->createView()
         ]);
     }
 
@@ -180,10 +194,4 @@ class TicketController extends BaseController
 
         return $this->show($ticket);
     }
-
-    public function addComment($id)
-    {
-
-    }
-
 }

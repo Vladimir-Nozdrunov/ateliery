@@ -1,5 +1,5 @@
 roles:
-   ROLE_ADMIN: Администратор
-   ROLE_MANAGER: Менеджер отделения
-   ROLE_WORKER: Сотрудник
-   ROLE_COURIER: Курьер
+  ROLE_ADMIN: Администратор
+  ROLE_MANAGER: Менеджер отделения
+  ROLE_MASTER: Мастер
+  ROLE_COURIER: Курьер

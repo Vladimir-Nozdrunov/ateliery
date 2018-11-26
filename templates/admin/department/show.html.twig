@@ -23,6 +23,12 @@
                     {{ department.closeTime ? department.closeTime|date('H:i') : '' }}
                 </td>
             </tr>
+            <tr>
+                <th>Сотрудники</th>
+                <td>
+                    <a title="Просмотр" class="btn btn-info" href="{{ path('users_by_department', {'id': department.id}) }}"><i class="material-icons">remove_red_eye</i></a>
+                </td>
+            </tr>
         </tbody>
     </table>
 

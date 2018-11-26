@@ -1,9 +1,9 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Тикет #{{ ticket.id }}{% endblock %}
+{% block title %}Тикет #{{ ticket.id+54 }}{% endblock %}
 
 {% block body %}
-    <h1>{{ ticket.title }} (# {{ ticket.id }})</h1>
+    <h1>{{ ticket.title }} (# {{ ticket.id+54 }})</h1>
 
     <div class="col-md-6">
         {% if ticket.status.alias == 'open' %}
@@ -48,8 +48,7 @@
                 </tr>
             </tbody>
         </table>
-
-        {{ ticket.info|raw }}
+        <div class="col-md-6 ticket-main-info">{{ ticket.info|raw }}</div>
 
     </div>
 
@@ -61,7 +60,24 @@
     {% endif %}
 
     <div class="col-md-12">
+        <h3>Комментарии</h3>
+            {% for comment in comments %}
+                <div class="col-md-12 ticket-comment">
+                    <div class="comment-author">{{ comment.author.fullname }} ({{ ('roles.' ~ (comment.author.roles|first))|trans }})<span class="pull-right comment-date">{{ comment.createdAt|date('H:i | d.m.y') }}</span></div>
+                    <hr style=" color: #5eb5e0; background-color: #5eb5e0; height: 2px;">
+                    {{ comment.content|raw }}
+                    {% if role == 'ROLE_ADMIN' or 'ROLE_MANAGER' %}
+                        <div class="pull-right text-right">
+                            <a title="Удалить" class="btn btn-danger" href="{{ path('comment_remove', {'id': comment.id }) }}" onclick="return confirm('Вы точно хотите удалить объект?');"><i class="material-icons">delete</i></a>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+    </div>
 
+    <div class="col-md-12 add-comment-form">
+        <h3>Добавить комментарий</h3>
+        {{ include('admin/comment/_form.html.twig') }}
     </div>
 
 

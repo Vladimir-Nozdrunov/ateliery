@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Controller\BaseController;
+use App\Entity\Department;
 use App\Entity\User;
 use App\Form\UserType;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -64,7 +65,7 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="user_show", methods="GET")
+     * @Route("/{id}", name="user_show", methods="GET", requirements={"\+d"})
      */
     public function show(User $user): Response
     {
@@ -73,13 +74,28 @@ class UserController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="user_edit", methods="GET|POST")
+     * @param Request $request
+     * @param User $user
+     * @param UserPasswordEncoderInterface $encoder
+     * @return Response
      */
-    public function edit(Request $request, User $user): Response
+    public function edit(Request $request, User $user, UserPasswordEncoderInterface $encoder): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user, [
+            'password' => $user->getPassword()
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if($form->get('password')->getData()){
+                $pass = $form->get('password')->getData();
+
+                $encoded = $encoder->encodePassword($user, $pass);
+
+                $user->setPassword($encoded);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('user_index', ['id' => $user->getId()]);
@@ -107,6 +123,20 @@ class UserController extends BaseController
 
 
         return $this->redirectToRoute('user_index');
+    }
+
+    /**
+     * @Route("/department/{id}", name="users_by_department", requirements={"\+d"})
+     * @param $id
+     * @return Response
+     */
+    public function indexByDepartment(Department $id)
+    {
+        $users = $this->em->getRepository(User::class)->findBy(['department' => $id]);
+
+        return $this->render('admin/user/index.html.twig',[
+            'users' => $users
+        ]);
     }
 
 //    /**
