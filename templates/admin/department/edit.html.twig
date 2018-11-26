@@ -1,0 +1,12 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Редактирование филиала{% endblock %}
+
+{% block body %}
+    <h1>Редактирование филиала: {{ department.address }}</h1>
+
+    <div class="col-md-12">
+        {{ include('admin/department/_form.html.twig', {'button_label': 'Сохранить'}) }}
+    </div>
+
+{% endblock %}

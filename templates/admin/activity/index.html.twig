@@ -1,0 +1,22 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Журнал активности{% endblock %}
+
+{% block body %}
+<table class="table centered text-center table-striped">
+    <tbody>
+    {% for activity in activities %}
+        <tr>
+            <td>{{ activity.createdAt|date('H:i / d.m.y') }}</td>
+            <td>{{ activity.user.fullname }}</td>
+            <td>{{ activity.details }}</td>
+            <td>{{ activity.diff ? activity.diff : '' }}</td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="6">Записи не найдены</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

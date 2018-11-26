@@ -1,0 +1,71 @@
+{% extends 'site_base.html.twig' %}
+
+{% block title %}{{ product.name }} | Toppik{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1 class="col-sm-12 product-full-title">{{ product.name }}</h1>
+        <div class="col-sm-12">
+            <div class="col-md-6 col-sm-12">
+                <img class="img-responsive product-img" src="{{ asset('uploads/products/' ~ product.img) }}"
+                     alt="{{ product.name }}"
+                     title="{{ product.name }}"/>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="product-full-info">
+                    <div class="product-category">
+                        {% if product.category is defined %}
+                        Категория:  <a href="{{ asset('') }}">{{ product.category.name }}</a>
+                        {% else %}
+                            Без категории
+                        {% endif %}
+                    </div>
+                    <br>
+                    <div class="price-volume">
+                        <table class="centered text-center">
+                            <thead>
+                            <tr>
+                                <th class="col-md-6 text-center">Объём</th>
+                                <th class="col-md-6 text-center">Цена</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                    {% for vol in volume %}
+                                    <tr>
+                                        <td>
+                                            {{ vol.value }}
+                                        </td>
+                                        <td>
+                                            {{ vol.price }}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <br>
+                    (Позже сделаю выпадающий список с объёмами. После выбора объёма будет меняться цена)
+                    {#<div class="product-price">#}
+                        {#Цена {{ primaryPrice }}#}
+                    {#</div>#}
+                    <br>
+                    {#<div class="col-md-4">#}
+                         {#<select class="form-control" name="volume-value">#}
+                            {#{% for vol in volume %}#}
+                                {#<option value="{{ vol.id }}">{{ vol.value }}</option>#}
+                            {#{% endfor %}#}
+                        {#</select>#}
+                    {#</div>#}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 product-full-description">
+            {{ product.description|raw }}
+        </div>
+
+    </div>
+</div>
+{% endblock %}

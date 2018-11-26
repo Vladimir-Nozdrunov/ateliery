@@ -1,0 +1,25 @@
+
+###> symfony/framework-bundle ###
+/.idea/
+.idea
+symfony.lock
+/public/bundles/
+/var/
+/vendor/
+/tests
+.env
+/composer.phar
+.htaccess
+/uploads
+symfony.lock
+###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+/phpunit.xml
+/phpunit.xml.dist
+###< symfony/phpunit-bridge ###
+
+###> symfony/web-server-bundle ###
+/.web-server-pid
+###< symfony/web-server-bundle ###

@@ -1,0 +1,45 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Профиль пользователя {{ user.fullName }}{% endblock %}
+
+{% block body %}
+    <h1>Пользователь: {{ user.fullName }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Имя</th>
+                <td>{{ user.firstName }}</td>
+            </tr>
+            <tr>
+                <th>Фамилия</th>
+                <td>{{ user.lastName }}</td>
+            </tr>
+            <tr>
+                <th>Почта</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Телефон</th>
+                <td>{{ user.phone }}</td>
+            </tr>
+            <tr>
+                <th>Роль</th>
+                <td>{{ ('roles.' ~ (app.user.roles|first))|trans }}</td>
+            </tr>
+            <tr>
+                <th>Последняя активность</th>
+                <td>{{ user.lastLogin ? user.lastLogin|date('H:i / d.m.Y') : '' }}</td>
+            </tr>
+            {#<tr>#}
+                {#<th>Пароль</th>#}
+                {#<td>{{ user.password }}</td>#}
+            {#</tr>#}
+        </tbody>
+    </table>
+
+    <a title="Редактировать" class="btn btn-warning" href="{{ path('user_edit', {'id': user.id}) }}"><i class="material-icons">mode_edit</i></a>
+
+    <a title="Удалить" class="btn btn-danger" href="{{ path('user_remove', {'id': user.id}) }}" onclick="return confirm('Вы точно хотите удалить объект?');"><i class="material-icons">delete</i></a>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Пользователи{% endblock %}
+
+{% block body %}
+    <h1>Пользователи</h1>
+
+    <table class="table centered text-center table-striped">
+        <thead>
+            <tr>
+                <th class="text-center">Имя</th>
+                <th class="text-center">Фамилия</th>
+                <th class="text-center">Почта</th>
+                <th class="text-center">Телефон</th>
+                <th class="text-center">Роль</th>
+                <th class="text-center">Последняя активность</th>
+                <th class="text-center">Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.firstName }}</td>
+                <td>{{ user.lastName }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.phone }}</td>
+                <td>{{ ('roles.' ~ (app.user.roles|first))|trans }}</td>
+                <td>{{ user.lastLogin ? user.lastLogin|date('H:i / d.m.Y') : '' }}</td>
+                <td>
+                    <a title="Просмотр" class="btn btn-info" href="{{ path('user_show', {'id': user.id}) }}"><i class="material-icons">remove_red_eye</i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Записи не найдены</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-success" title="Добавить" href="{{ path('user_new') }}"><i class="material-icons">add</i></a>
+{% endblock %}

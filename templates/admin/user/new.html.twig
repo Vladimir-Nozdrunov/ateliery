@@ -1,0 +1,15 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Создание пользователя{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <h1>Создание нового пользователя</h1>
+
+            {{ include('admin/user/_form.html.twig') }}
+
+        </div>
+    </div>
+
+{% endblock %}

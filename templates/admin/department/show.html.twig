@@ -1,0 +1,34 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Отделение: {{ department.address }}{% endblock %}
+
+{% block body %}
+    <h1>Филиал: {{ department.address }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Адрес</th>
+                <td>{{ department.address }}</td>
+            </tr>
+            <tr>
+                <th>Телефон</th>
+                <td>{{ department.phone }}</td>
+            </tr>
+            <tr>
+                <th>Режим работы</th>
+                <td>
+                    {{ department.openTime ? department.openTime|date('H:i') : '' }}
+                      -
+                    {{ department.closeTime ? department.closeTime|date('H:i') : '' }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a title="Редактировать" class="btn btn-warning" href="{{ path('department_edit', {'id': department.id}) }}"><i class="material-icons">mode_edit</i></a>
+
+    <a title="Удалить" class="btn btn-danger" href="{{ path('department_remove', {'id': department.id}) }}" onclick="return confirm('Вы точно хотите удалить объект?');"><i class="material-icons">delete</i></a>
+
+
+{% endblock %}

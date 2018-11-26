@@ -1,0 +1,40 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Отделения{% endblock %}
+
+{% block body %}
+    <h1>Отделения</h1>
+
+    <table class="table centered text-center table-striped">
+        <thead>
+            <tr>
+                <th class="text-center">Адрес</th>
+                <th class="text-center">Телефон</th>
+                <th class="text-center">Режим работы</th>
+                <th class="text-center">Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for department in departments %}
+            <tr>
+                <td>{{ department.address }}</td>
+                <td>{{ department.phone }}</td>
+                <td>{{ department.openTime ? department.openTime|date('H:i') : '' }}
+                        -
+                    {{ department.closeTime ? department.closeTime|date('H:i') : '' }}
+                </td>
+                <td>
+                    <a title="Просмотр" class="btn btn-info" href="{{ path('department_show', {'id': department.id}) }}"><i class="material-icons">remove_red_eye</i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">Записи не найдены</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-success" title="Добавить" href="{{ path('department_new') }}"><i class="material-icons">add</i></a>
+
+{% endblock %}

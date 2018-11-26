@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block body %}
+    <h1>{{ article.title }}</h1>
+
+    <div class="col-md-8">
+        <div class="col-md-4">
+            <p class="article-fields">Создана:</p>
+            <p class="article-fields">Аннотация:</p>
+            <p class="article-fields">Опубликована:</p>
+        </div>
+        <div class="col-md-4">
+            <p class="article-fields-values">{{ article.createdAt ? article.createdAt|date('d.m.Y') : '' }}</p>
+            <p class="article-fields-values">{{ article.introText }}</p>
+            <p class="article-fields-values">{{ article.isPublished ? 'Да' : 'Нет' }}</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <img src="{{ asset('uploads/articles/' ~ article.previewImg) }}" width="250px">
+    </div>
+
+    <a title="Редактирование" class="btn btn-warning" href="{{ path('article_edit', {'id': article.id}) }}"><i class="material-icons">mode_edit</i></a>
+    <a title="Удалить" class="btn btn-danger" href="{{ path('article_remove', {'id': article.id}) }}" onclick="return confirm('Вы точно хотите удалить объект?');"><i class="material-icons">cancel</i></a>
+
+
+    <div class="col-md-12"><h3>Описание</h3></div>
+    <div class="col-md-12">
+        {{ article.content |raw}}
+    </div>
+
+{% endblock %}

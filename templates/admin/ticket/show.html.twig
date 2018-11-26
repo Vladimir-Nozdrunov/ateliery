@@ -1,0 +1,68 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Тикет #{{ ticket.id }}{% endblock %}
+
+{% block body %}
+    <h1>{{ ticket.title }} (# {{ ticket.id }})</h1>
+
+    <div class="col-md-6">
+        {% if ticket.status.alias == 'open' %}
+            <br>
+            <a title="Отметить тикет как выполненный" class="btn btn-primary" href="{{ path('ticket_change_status', {'id': ticket.id, 'alias': 'closed'}) }}"><i class="material-icons">done_all</i></a>
+        {% else %}
+            {% if role == 'ROLE_ADMIN' or 'ROLE_MANAGER' %}
+                <br>
+                <a title="Вернуть тикет в работу" class="btn btn-primary" href="{{ path('ticket_change_status', {'id': ticket.id, 'alias': 'open'}) }}"><i class="material-icons">eject</i></a>
+            {% endif %}
+        {% endif %}
+        <div class="pull-right">
+            {% if role == 'ROLE_ADMIN' or 'ROLE_MANAGER' %}
+                <a title="Редактировать" class="btn btn-warning" href="{{ path('ticket_edit', {'id': ticket.id}) }}"><i class="material-icons">mode_edit</i></a>
+                <a title="Удалить" class="btn btn-danger" href="{{ path('ticket_remove', {'id': ticket.id}) }}" onclick="return confirm('Вы точно хотите удалить объект?');"><i class="material-icons">delete</i></a>
+            {% endif %}
+        </div>
+        <table class="table centered text-center">
+            <tbody>
+                <tr>
+                    <th>Создан</th>
+                    <td>{{ ticket.createdAt ? ticket.createdAt|date('H:i / d.m.Y') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Выполнить до</th>
+                    <td>{{ ticket.dueDate ? ticket.dueDate|date('H:i / d.m.Y') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Статус</th>
+                    <td>
+                        {% if ticket.status.alias == 'closed' %}
+                            <div class="ticket-status-closed">{{ ticket.status.name }}</div>
+                            ({{ ticket.closedAt ? ticket.closedAt|date('H:i / d.m.Y') : '' }})
+                        {% else %}
+                            <div class="ticket-status-open">{{ ticket.status.name }}</div>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        {{ ticket.info|raw }}
+
+    </div>
+
+    {% if ticket.img is not null %}
+        <div class="col-md-6 text-center">
+            <br>
+            <img src="{{ asset('uploads/tickets/' ~ ticket.img) }}" width="250px">
+        </div>
+    {% endif %}
+
+    <div class="col-md-12">
+
+    </div>
+
+
+{% endblock %}

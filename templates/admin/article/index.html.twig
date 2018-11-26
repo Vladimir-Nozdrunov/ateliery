@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Новости{% endblock %}
+
+{% block body %}
+    <h1>Новости</h1>
+
+    <table class="table centered text-center table-striped">
+        <thead class="text-center">
+            <tr>
+                <th class="text-center">Создана</th>
+                <th class="text-center">Заголовок</th>
+                <th class="text-center">Изображение для превью</th>
+                <th class="text-center">Опубликована</th>
+                <th class="text-center">Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for article in articles %}
+            <tr>
+                <td>{{ article.createdAt ? article.createdAt|date('d.m.Y') : '' }}</td>
+                <td class="table-names">{{ article.title }}</td>
+                <td><img src="{{ asset('uploads/articles/' ~ article.previewImg) }}" width="50px"></td>
+                <td>{{ article.isPublished ? '<i class="material-icons">check</i>' : '' }}</td>
+                <td>
+                    <a title="Просмотр" class="btn btn-info" href="{{ path('article_show', {'id': article.id}) }}"><i class="material-icons">remove_red_eye</i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">Записи не найдены</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-success" title="Добавить" href="{{ path('article_new') }}"><i class="material-icons">add</i></a>
+{% endblock %}

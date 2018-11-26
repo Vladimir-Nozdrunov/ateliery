@@ -1,0 +1,25 @@
+{% for product in products %}
+    <div class="col-sm-3 card">
+        {#{%  if product.isNew == true %}#}
+            {#<span class="label label-default product-is-new pull-right">Новый</span>#}
+        {#{% else %}#}
+            {#<span class="label label-default product-is-new pull-right hidden">Новый</span>#}
+        {#{% endif %}#}
+        <img class="img-responsive product-img center-block" src="{{ asset('uploads/products/' ~ product.img) }}"
+             alt="{{ product.name }}"
+             title="{{ product.name }}"/>
+        <div class="card-title">
+            <a href="{{ path('product_full', {'id': product.id}) }}">{{ product.name | truncate(12) }}</a>
+        </div>
+
+        {% if product.introText is defined %}
+            <div class="card-intro-text">{{ product.introText | truncate(30) }}</div>
+        {% endif %}
+
+        <div class="text-center">
+            <a href="{{ path('product_full', {'id': product.id}) }}" class="btn-buy">Подробнее</a>
+        </div>
+        <input type="hidden" name="id" value="{{ product.id }}">
+        <input type="hidden" name="count" value="1">
+    </div>
+{% endfor %}
