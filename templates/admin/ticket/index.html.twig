@@ -5,42 +5,86 @@
 {% block body %}
     <h1>Тикеты</h1>
 
-    <table class="table centered text-center table-striped">
-        <thead>
-            <tr>
-                <th class="text-center">Артикул</th>
-                <th class="text-center">Название</th>
-                <th class="text-center">Статус</th>
-                <th class="text-center">Фото</th>
-                <th class="text-center">Создан</th>
-                <th class="text-center">Выполнить до</th>
-                <th class="text-center">Действия</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for ticket in tickets %}
-            <tr>
-                <td>{{ ticket.id +54 }}</td>
-                <td>{{ ticket.title }}</td>
-                <td>{{ ticket.status.name }}</td>
-                <td>{% if ticket.img is null %}
+    <ul class="nav nav-tabs nav-justified">
+        <li class="active"><a data-toggle="tab" href="#open">Активные</a></li>
+        <li><a data-toggle="tab" href="#closed">Закрытые</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="open" class="tab-pane fade in active">
+            <table class="table centered text-center table-striped">
+                <thead>
+                <tr>
+                    <th class="text-center">Артикул</th>
+                    <th class="text-center">Название</th>
+                    <th class="text-center">Статус</th>
+                    <th class="text-center">Фото</th>
+                    <th class="text-center">Создан</th>
+                    <th class="text-center">Выполнить до</th>
+                    <th class="text-center">Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for ticket in tickets %}
+                    {% if ticket.status.alias == 'open' %}
+                    <tr>
+                        <td>{{ ticket.id +54 }}</td>
+                        <td>{{ ticket.title }}</td>
+                        <td>{{ ticket.status.name }}</td>
+                        <td>{% if ticket.img is null %}
 
-                    {% else %}
-                        <img src="{{ asset('uploads/tickets/' ~ ticket.img) }}" width="50px"></td>
+                            {% else %}
+                            <img src="{{ asset('uploads/tickets/' ~ ticket.img) }}" width="50px"></td>
+                        {% endif %}
+                        <td>{{ ticket.createdAt ? ticket.createdAt|date('H:i / d.m.Y') : '' }}</td>
+                        <td>{{ ticket.dueDate ? ticket.dueDate|date('H:i / d.m.Y') : '' }}</td>
+                        <td>
+                            <a title="Просмотр" class="btn btn-info" href="{{ path('ticket_show', {'id': ticket.id}) }}"><i class="material-icons">remove_red_eye</i></a>
+                        </td>
+                    </tr>
                     {% endif %}
-                <td>{{ ticket.createdAt ? ticket.createdAt|date('H:i / d.m.Y') : '' }}</td>
-                <td>{{ ticket.dueDate ? ticket.dueDate|date('H:i / d.m.Y') : '' }}</td>
-                <td>
-                    <a title="Просмотр" class="btn btn-info" href="{{ path('ticket_show', {'id': ticket.id}) }}"><i class="material-icons">remove_red_eye</i></a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">Записи отсутствуют</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                {% endfor %}
+                </tbody>
+            </table>
 
-    <a class="btn btn-success" title="Добавить" href="{{ path('ticket_new') }}"><i class="material-icons">add</i></a>
+            <a class="btn btn-success" title="Добавить" href="{{ path('ticket_new') }}"><i class="material-icons">add</i></a>
+
+        </div>
+
+        <div id="closed" class="tab-pane fade">
+            <table class="table centered text-center table-striped">
+                <thead>
+                <tr>
+                    <th class="text-center">Артикул</th>
+                    <th class="text-center">Название</th>
+                    <th class="text-center">Статус</th>
+                    <th class="text-center">Фото</th>
+                    <th class="text-center">Создан</th>
+                    <th class="text-center">Выполнить до</th>
+                    <th class="text-center">Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for ticket in tickets %}
+                    {% if ticket.status.alias == 'closed' %}
+                    <tr>
+                        <td>{{ ticket.id +54 }}</td>
+                        <td>{{ ticket.title }}</td>
+                        <td>{{ ticket.status.name }}</td>
+                        <td>{% if ticket.img is null %}
+
+                            {% else %}
+                            <img src="{{ asset('uploads/tickets/' ~ ticket.img) }}" width="50px"></td>
+                        {% endif %}
+                        <td>{{ ticket.createdAt ? ticket.createdAt|date('H:i / d.m.Y') : '' }}</td>
+                        <td>{{ ticket.dueDate ? ticket.dueDate|date('H:i / d.m.Y') : '' }}</td>
+                        <td>
+                            <a title="Просмотр" class="btn btn-info" href="{{ path('ticket_show', {'id': ticket.id}) }}"><i class="material-icons">remove_red_eye</i></a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

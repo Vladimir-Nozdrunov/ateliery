@@ -241,4 +241,27 @@ class User implements UserInterface
     {
         return $this->getFirstName() . ' ' . $this->getLastName();
     }
+
+    public function getFullInfo()
+    {
+        $role = $this->getRole();
+        switch ($role){
+            case 'ROLE_ADMIN':
+                $role = 'Администратор';
+                break;
+
+            case 'ROLE_MANAGER':
+                $role = 'Менеджер';
+                break;
+
+            case 'ROLE_MASTER':
+                $role = 'Мастер';
+                break;
+
+            case 'ROLE_COURIER':
+                $role = 'Курьер';
+                break;
+        }
+        return $this->getFirstName() . ' ' . $this->getLastName() . ' (' . $role . ', ' . $this->getDepartment()->getAddress() . ')';
+    }
 }

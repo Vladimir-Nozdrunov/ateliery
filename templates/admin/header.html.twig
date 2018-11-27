@@ -4,6 +4,9 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
+                <a href="{{ path('admin_index') }}">
+                    <img class="pull-left" src="{{ asset('img/logo.png') }}" height="50px" alt="">
+                </a>
                 <li><a href="{{ path('ticket_index') }}">Тикеты</a></li>
                 {% if role == 'ROLE_ADMIN' or role == 'ROLE_MANAGER' %}
                     <li><a href="{{ path('user_index') }}">Пользователи</a></li>
@@ -13,7 +16,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><img src="{{ asset('img/account.png') }}" width="50px"></li>
-                <li><a href="{{ path('department_index') }}">{{ app.user.email }}</a></li>
+                <li><a href="{{ path('profile_index') }}">{{ app.user.email }}</a></li>
                 <li><a href="{{ path('logout') }}">Выйти</a></li>
             </ul>
         </div>

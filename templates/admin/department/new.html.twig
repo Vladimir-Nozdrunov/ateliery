@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+{% extends 'admin/base.html.twig' %}
 
-<title>New Department</title>
+{% block title %}Создание отделения{% endblock %}
 
 {% block body %}
-    <h1>Create new Department</h1>
 
-    {{ include('department/_form.html.twig') }}
+    <h1>Создание отделения</h1>
 
-    <a href="{{ path('department_index') }}">back to list</a>
+    {{ include('admin/department/_form.html.twig') }}
+
 {% endblock %}

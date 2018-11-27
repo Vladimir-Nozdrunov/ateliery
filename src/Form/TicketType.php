@@ -50,7 +50,7 @@ class TicketType extends AbstractType
                 [
                     'label' => 'Исполнитель',
                     'class' => User::class,
-                    'choice_label' => 'firstName'
+                    'choice_label' => 'fullInfo'
                 ])
             ->add('department', EntityType::class,
                 [

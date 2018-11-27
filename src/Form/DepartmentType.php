@@ -21,17 +21,17 @@ class DepartmentType extends AbstractType
                 ])
             ->add('phone', TextType::class,
                 [
-                    'label' => 'Адрес',
+                    'label' => 'Телефон',
                     'required' => true,
                 ])
             ->add('openTime', TimeType::class,
                 [
-                    'label' => 'Адрес',
+                    'label' => 'Время открытия',
                     'required' => true,
                 ])
             ->add('closeTime', TimeType::class,
                 [
-                    'label' => 'Адрес',
+                    'label' => 'Время закрытия',
                     'required' => true,
                 ])
         ;

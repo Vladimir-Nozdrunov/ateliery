@@ -49,7 +49,11 @@ class UserType extends AbstractType
             ->add('phone', TextType::class,
                 [
                     'label' => 'Телефон',
-                    'required' => true
+                    'required' => true,
+                    'attr' => [
+                        'placeholder' => '(099)123-45-67'
+                    ]
+
                 ]);
             if($options['password']){
                 $builder->add('password', PasswordType::class,

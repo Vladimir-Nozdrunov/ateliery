@@ -32,9 +32,9 @@
         </tbody>
     </table>
 
-    <a title="Редактировать" class="btn btn-warning" href="{{ path('department_edit', {'id': department.id}) }}"><i class="material-icons">mode_edit</i></a>
-
-    <a title="Удалить" class="btn btn-danger" href="{{ path('department_remove', {'id': department.id}) }}" onclick="return confirm('Вы точно хотите удалить объект?');"><i class="material-icons">delete</i></a>
-
+    {% if role == 'ROLE_ADMIN' %}
+        <a title="Редактировать" class="btn btn-warning" href="{{ path('department_edit', {'id': department.id}) }}"><i class="material-icons">mode_edit</i></a>
+        <a title="Удалить" class="btn btn-danger" href="{{ path('department_remove', {'id': department.id}) }}" onclick="return confirm('Вы точно хотите удалить объект?');"><i class="material-icons">delete</i></a>
+    {% endif %}
 
 {% endblock %}

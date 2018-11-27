@@ -24,7 +24,7 @@ class UserController extends BaseController
     {
         $users = $this->getDoctrine()
             ->getRepository(User::class)
-            ->findAll();
+            ->findBy([], ['department' => 'DESC']);
 
         return $this->render('/admin/user/index.html.twig', ['users' => $users]);
     }
@@ -87,6 +87,9 @@ class UserController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $roles = $form->get('roles')->getData();
+            $user->setRoles($roles);
 
             if($form->get('password')->getData()){
                 $pass = $form->get('password')->getData();
