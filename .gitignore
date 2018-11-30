@@ -11,6 +11,7 @@ symfony.lock
 /composer.phar
 .htaccess
 /uploads
+.env
 symfony.lock
 ###< symfony/framework-bundle ###
 

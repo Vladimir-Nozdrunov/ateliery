@@ -5,7 +5,7 @@
 {% block body %}
     <h1>{{ ticket.title }} (# {{ ticket.id+54 }})</h1>
 
-    <div class="col-md-6">
+    <div class="col-md-8">
         {% if ticket.status.alias == 'open' %}
             <br>
             <a title="Отметить тикет как выполненный" class="btn btn-primary" href="{{ path('ticket_change_status', {'id': ticket.id, 'alias': 'closed'}) }}"><i class="material-icons">done_all</i></a>
@@ -27,6 +27,12 @@
                     <th>Создан</th>
                     <td>{{ ticket.createdAt ? ticket.createdAt|date('H:i / d.m.Y') : '' }}</td>
                 </tr>
+                {% if ticket.assignee != ticket.creator %}
+                    <tr>
+                        <th>Кем</th>
+                        <td>{{ ticket.creator.fullInfo }}</td>
+                    </tr>
+                {% endif %}
                 <tr>
                     <th>Выполнить до</th>
                     <td>{{ ticket.dueDate ? ticket.dueDate|date('H:i / d.m.Y') : '' }}</td>
@@ -43,17 +49,21 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>Исполнитель</th>
+                    <td>{{ ticket.assignee.fullInfo }}</td>
+                </tr>
+                <tr>
                     <th></th>
                     <td></td>
                 </tr>
             </tbody>
         </table>
-        <div class="col-md-6 ticket-main-info">{{ ticket.info|raw }}</div>
+        <div class="col-md-8 ticket-main-info">{{ ticket.info|raw }}</div>
 
     </div>
 
     {% if ticket.img is not null %}
-        <div class="col-md-6 text-center">
+        <div class="col-md-4 text-center">
             <br>
             <img src="{{ asset('uploads/tickets/' ~ ticket.img) }}" width="250px">
         </div>
