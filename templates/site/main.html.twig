@@ -1,34 +1,15 @@
-{% extends 'site_base.html.twig' %}
+{% extends 'site/site_base.html.twig' %}
 
 
 {% block body %}
 <div class="container-fluid">
-    <div class="row slider">
-        <div class="owl-carousel hidden-xs">
-            <div>
-                <img src="{{ asset('img/1.jpg') }}" alt="">
-            </div>
-            <div>
-                <img src="{{ asset('img/2.jpg') }}" alt="">
-            </div>
-            <div>
-                <img src="{{ asset('img/3.jpg') }}" alt="">
-            </div>
+    <div class="row">
+        <div class="col-md-6">
+            <a class="btn btn-primary" href="">Регистрация</a>
         </div>
-    </div>
-</div>
-<div class="container">
-    <div class="row">
-        <div class="main-page-section-title">Продукция</div>
-        {{ include('site/product/preview.html.twig') }}
-    </div>
-</div>
-
-
-<div class="container latest-news">
-    <div class="row">
-        <div class="main-page-section-title">Новости</div>
-
+        <div class="col-md-6">
+            <a class="btn btn-success" href="">Вход</a>
+        </div>
     </div>
 </div>
 

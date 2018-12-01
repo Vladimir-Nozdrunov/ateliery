@@ -3,8 +3,10 @@
 namespace App\Controller\Admin;
 
 use App\Controller\BaseController;
+use App\Entity\Client;
 use App\Entity\Department;
 use App\Entity\User;
+use App\Form\ClientType;
 use App\Form\UserType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,29 +39,29 @@ class UserController extends BaseController
      */
     public function new(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $client = new Client();
+        $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $roles = $form->get('roles')->getData();
-            $user->setRoles($roles);
+            $client->setRoles($roles);
 
             $pass = $form->get('password')->getData();
 
-            $encoded = $encoder->encodePassword($user, $pass);
+            $encoded = $encoder->encodePassword($client, $pass);
 
-            $user->setPassword($encoded);
+            $client->setPassword($encoded);
 
-            $this->em->persist($user);
+            $this->em->persist($client);
             $this->em->flush();
 
             return $this->redirectToRoute('user_index');
         }
 
         return $this->render('admin/user/new.html.twig', [
-            'user' => $user,
+            'user' => $client,
             'form' => $form->createView(),
         ]);
     }
