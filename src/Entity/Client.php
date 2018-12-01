@@ -53,6 +53,11 @@ class Client
     protected $orders;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    protected $password;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -170,5 +175,21 @@ class Client
     public function setOrders($orders): void
     {
         $this->orders = $orders;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password): void
+    {
+        $this->password = $password;
     }
 }
