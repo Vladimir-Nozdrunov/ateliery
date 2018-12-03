@@ -4,16 +4,9 @@
 
 {% block body %}
 
-<div class="back">
-    <div class="div-center">
-        <div class="content">
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <button class="btn btn-success"><i class="material-icons">check</i></button>
-            {{ form_end(form) }}
-
-        </div>
-    </div>
-</div>
+{{ form_start(form) }}
+{{ form_widget(form) }}
+<button class="btn btn-success"><i class="material-icons">check</i></button>
+{{ form_end(form) }}
 
 {% endblock %}

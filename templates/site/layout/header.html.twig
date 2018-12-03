@@ -10,11 +10,18 @@
                 <li><a href="{{ path('order_index') }}">Заказы</a></li>
                 <li><a href="{{ path('site_departments') }}">Отделения</a></li>
             </ul>
+            {% if app.user %}
             <ul class="nav navbar-nav navbar-right">
                 <li><img src="{{ asset('img/account.png') }}" width="50px"></li>
                 <li><a href="{{ path('client_profile') }}">{{ app.user.email }}</a></li>
                 <li><a href="{{ path('logout') }}">Выйти</a></li>
             </ul>
+            {% else %}
+            <ul class="nav navbar-nav navbar-right">
+                <a class="btn btn-primary" href="{{ path('site_registration') }}">Регистрация</a>
+                <a class="btn btn-success" href="{{ path('app_login') }}">Вход</a>
+            </ul>
+            {% endif %}
         </div>
     </div>
 </nav>

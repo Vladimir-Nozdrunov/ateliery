@@ -38,14 +38,6 @@ class ClientType extends AbstractType
                         'placeholder' => '(099)123-45-67'
                     ]
                 ])
-            ->add('address', TextType::class,
-                [
-                    'label' => 'Адрес',
-                    'required' => true,
-                    'attr' => [
-                        'placeholder' => 'Леси Украинки 26'
-                    ]
-                ])
             ->add('password', PasswordType::class,
                 [
                     'trim' => true,

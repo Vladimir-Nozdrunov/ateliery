@@ -19,7 +19,9 @@
 
 <div class="container">
     <div class="row">
-        <a class="btn btn-default" title="Назад" onclick="history.back();"><i class="material-icons">arrow_back</i></a>
+        {% if app.user %}
+            <a class="btn btn-default" title="Назад" onclick="history.back();"><i class="material-icons">arrow_back</i></a>
+        {% endif %}
         {% block body %}
         {% endblock %}
     </div>
