@@ -23,7 +23,11 @@
             <tr>
                 <td>{{ user.firstName }}</td>
                 <td>{{ user.lastName }}</td>
-                <td>{{ user.department.address }}</td>
+                {% if user.role != 'ROLE_ADMIN' and user.role != 'ROLE_CLIENT' %}
+                    <td>{{ user.department.address }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
                 {#<td>{{ user.email }}</td>#}
                 {#<td>{{ user.phone }}</td>#}
                 <td>{{ ('roles.' ~ (user.roles|first))|trans }}</td>

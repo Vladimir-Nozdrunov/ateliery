@@ -1,1 +1,20 @@
-{#{{ render(controller('App\\Controller\\Site\\SiteController::menu')) }}#}
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <a href="{{ path('admin_index') }}">
+                    <img class="pull-left" src="{{ asset('img/logo.png') }}" height="50px" alt="">
+                </a>
+                <li><a href="{{ path('order_index') }}">Заказы</a></li>
+                <li><a href="{{ path('site_departments') }}">Отделения</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><img src="{{ asset('img/account.png') }}" width="50px"></li>
+                <li><a href="{{ path('client_profile') }}">{{ app.user.email }}</a></li>
+                <li><a href="{{ path('logout') }}">Выйти</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

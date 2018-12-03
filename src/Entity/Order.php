@@ -5,8 +5,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="order")
+ * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
+ * @ORM\Table(name="orders")
  */
 class Order
 {
@@ -18,7 +18,7 @@ class Order
     protected $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="order")
      */
     protected $client;
 
@@ -38,9 +38,116 @@ class Order
     protected $dueDate;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
      */
-    protected $price;
+    protected $assignee;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Department", inversedBy="order")
+     */
+    protected $department;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $lat;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $lng;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $address;
+
+
+    public function __construct($user)
+    {
+        $this->client = $user;
+        $this->createdAt = new \DateTime;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param mixed $address
+     */
+    public function setAddress($address): void
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAssignee()
+    {
+        return $this->assignee;
+    }
+
+    /**
+     * @param mixed $assignee
+     */
+    public function setAssignee($assignee): void
+    {
+        $this->assignee = $assignee;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDepartment()
+    {
+        return $this->department;
+    }
+
+    /**
+     * @param mixed $department
+     */
+    public function setDepartment($department): void
+    {
+        $this->department = $department;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLat()
+    {
+        return $this->lat;
+    }
+
+    /**
+     * @param mixed $lat
+     */
+    public function setLat($lat): void
+    {
+        $this->lat = $lat;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLng()
+    {
+        return $this->lng;
+    }
+
+    /**
+     * @param mixed $lng
+     */
+    public function setLng($lng): void
+    {
+        $this->lng = $lng;
+    }
 
     /**
      * @return mixed
@@ -112,21 +219,5 @@ class Order
     public function setDueDate($dueDate): void
     {
         $this->dueDate = $dueDate;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    /**
-     * @param mixed $price
-     */
-    public function setPrice($price): void
-    {
-        $this->price = $price;
     }
 }

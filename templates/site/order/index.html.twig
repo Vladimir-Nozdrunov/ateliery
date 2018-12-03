@@ -1,0 +1,40 @@
+{% extends 'site/site_base.html.twig' %}
+
+{% block title %}Мои заказы{% endblock %}
+
+{% block body %}
+
+    <div class="col-md-12">
+        <h1>Мои заказы</h1>
+        <table class="table centered table-striped">
+            <tbody>
+            {% for order in orders %}
+            <tr>
+                <th>Номер #</th>
+                <td>{{ order.id+54 }}</td>
+            </tr>
+            <tr>
+                <th>Создан</th>
+                <td>{{ order.createdAt|date('H:i / d.m.Y') }}</td>
+            </tr>
+            <tr>
+                <th>Информация</th>
+                <td>{{ order.info }}</td>
+            </tr>
+            <tr>
+                <th>Отделение</th>
+                <td>{{ order.department }}</td>
+            </tr>
+            <tr>
+                <th>Будет выполнен</th>
+                <td>{{ order.dueDate|date('H:i / d.m.Y') }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a class="btn btn-success" title="Создать заказ" href="{{ path('order_new') }}"><i class="material-icons">add</i></a>
+
+    </div>
+
+{% endblock %}

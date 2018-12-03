@@ -3,3 +3,4 @@ roles:
   ROLE_MANAGER: Менеджер отделения
   ROLE_MASTER: Мастер
   ROLE_COURIER: Курьер
+  ROLE_CLIENT: Клиент

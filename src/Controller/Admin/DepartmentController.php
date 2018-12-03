@@ -37,6 +37,14 @@ class DepartmentController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $address = $form->get('address')->getData();
+
+            $coordinates = $this->getCoordinates($address);
+
+            $department->setLat($coordinates['lat']);
+            $department->setLng($coordinates['lng']);
+
             $em->persist($department);
             $em->flush();
 
@@ -66,6 +74,14 @@ class DepartmentController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $address = $form->get('address')->getData();
+
+            $coordinates = $this->getCoordinates($address);
+
+            $department->setLat($coordinates['lat']);
+            $department->setLng($coordinates['lng']);
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('department_index', ['id' => $department->getId()]);

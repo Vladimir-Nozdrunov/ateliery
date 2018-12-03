@@ -111,6 +111,10 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
+        if($user->getRole() === 'ROLE_CLIENT'){
+            return new RedirectResponse($this->router->generate('client_profile', ['id' => $user->getId()]));
+        }
+
         return new RedirectResponse($this->router->generate('admin_index'));
     }
 

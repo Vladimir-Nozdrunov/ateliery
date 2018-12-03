@@ -1,0 +1,16 @@
+{% extends 'site/site_base.html.twig' %}
+
+{% block title %}Заказ{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <h1>Создание заказа</h1>
+
+            {{ include('site/order/_form.html.twig') }}
+
+        </div>
+    </div>
+
+{% endblock %}

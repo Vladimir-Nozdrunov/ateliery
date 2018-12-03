@@ -6,7 +6,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="user")
  */
 class User implements UserInterface
@@ -64,14 +64,25 @@ class User implements UserInterface
     protected $department;
 
     /**
-     * User constructor.
-     * @param $isActive
+     * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="client")
      */
+    protected $order;
+
+//    /**
+//     * @ORM\Column(type="string", nullable=true)
+//     */
+//    protected $lat;
+//
+//    /**
+//     * @ORM\Column(type="string", nullable=true)
+//     */
+//    protected $lng;
+
+
     public function __construct()
     {
         $this->isActive = true;
     }
-
 
     /**
      * @return mixed
@@ -224,7 +235,7 @@ class User implements UserInterface
     /**
      * @return mixed
      */
-    public function getisActive()
+    public function getIsActive()
     {
         return $this->isActive;
     }
@@ -236,6 +247,38 @@ class User implements UserInterface
     {
         $this->isActive = $isActive;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param mixed $order
+     */
+    public function setOrder($order): void
+    {
+        $this->order = $order;
+    }
+
+//    /**
+//     * @return mixed
+//     */
+//    public function getAddress()
+//    {
+//        return $this->address;
+//    }
+//
+//    /**
+//     * @param mixed $address
+//     */
+//    public function setAddress($address): void
+//    {
+//        $this->address = $address;
+//    }
 
     public function getFullName()
     {
@@ -260,6 +303,9 @@ class User implements UserInterface
 
             case 'ROLE_COURIER':
                 $role = 'Курьер';
+                break;
+            case 'ROLE_CLIENT':
+                $role = 'Клиент';
                 break;
         }
         return $this->getFirstName() . ' ' . $this->getLastName() . ' (' . $role . ', ' . $this->getDepartment()->getAddress() . ')';

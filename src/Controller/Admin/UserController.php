@@ -22,9 +22,7 @@ class UserController extends BaseController
      */
     public function index(): Response
     {
-        $users = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->findBy([], ['department' => 'DESC']);
+        $users = $this->em->getRepository(User::class)->getStuff();
 
         return $this->render('/admin/user/index.html.twig', ['users' => $users]);
     }

@@ -1,0 +1,34 @@
+{% extends 'site/site_base.html.twig' %}
+
+{% block title %}Отделения{% endblock %}
+
+{% block body %}
+    <h1>Отделения</h1>
+
+    <table class="table centered text-center table-striped">
+        <thead>
+        <tr>
+            <th class="text-center">Адрес</th>
+            <th class="text-center">Телефон</th>
+            <th class="text-center">Режим работы</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for department in departments %}
+            <tr>
+                <td>{{ department.address }}</td>
+                <td>{{ department.phone }}</td>
+                <td>{{ department.openTime ? department.openTime|date('H:i') : '' }}
+                    -
+                    {{ department.closeTime ? department.closeTime|date('H:i') : '' }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">Записи не найдены</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

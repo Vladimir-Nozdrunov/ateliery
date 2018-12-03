@@ -2,7 +2,6 @@
 
 namespace App\Form;
 
-use App\Entity\Client;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -44,7 +43,7 @@ class ClientType extends AbstractType
                     'label' => 'Адрес',
                     'required' => true,
                     'attr' => [
-                        'placeholder' => 'Леси Украинки 26, 12'
+                        'placeholder' => 'Леси Украинки 26'
                     ]
                 ])
             ->add('password', PasswordType::class,
@@ -59,7 +58,7 @@ class ClientType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Client::class
+            'data_class' => User::class
         ]);
     }
 }

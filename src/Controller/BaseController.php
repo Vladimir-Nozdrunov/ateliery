@@ -3,16 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Activity;
+use App\Service\Haversine;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class BaseController extends Controller
 {
-   protected $em;
+    protected $em;
+    protected $haversin;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, Haversine $haversin)
     {
         $this->em = $em;
+        $this->haversin = $haversin;
     }
 
     public function getRole()
@@ -22,37 +25,31 @@ class BaseController extends Controller
         return $role = $role[0];
     }
 
-    public function linkItem($object, $path)
+    public function getCoordinates($address)
     {
-        return "<a href={$path} target='_blank'>{$object}</a>";
+        $address = 'Киев, ' . $address;
+
+        $address = urlencode($address);
+
+        $url = "http://www.mapquestapi.com/geocoding/v1/address?key=9dtWXrkGKY5IXxUXFIcz8tFXQyKMKlii&location={$address}";
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);
+        curl_close($ch);
+
+        $coordinates = json_decode($output,true);
+
+        $coordinates = $coordinates['results'][0]['locations'][0]['latLng'];
+
+        return $coordinates;
     }
 
-    public function compareChanges($entity)
+    public function countNearest()
     {
-        $uow = $this->em->getUnitOfWork();
-        $uow->computeChangeSets();
 
-        $changeset = $uow->getEntityChangeSet($entity);
-
-        foreach ($changeset as $key => $value) {
-            $changes[][$key] = $value;
-        }
-
-        return $changes;
     }
 
-    public function saveActivity($details = null, $diff = null)
-    {
-        $user = $this->getUser();
-        if(!$user){
-            $user = $this->container->get('security.token_storage')->getToken()->getUser();
-        }
 
-        $activity = new Activity($user, $details, $diff);
-
-        $this->em->persist($activity);
-        $this->em->flush();
-
-        return true;
-    }
 }

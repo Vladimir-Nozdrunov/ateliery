@@ -43,6 +43,70 @@ class Department
     protected $employees;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="department")
+     */
+    protected $order;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $lat;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $lng;
+
+    /**
+     * @return mixed
+     */
+    public function getDepartment()
+    {
+        return $this->department;
+    }
+
+    /**
+     * @param mixed $department
+     */
+    public function setDepartment($department): void
+    {
+        $this->department = $department;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLat()
+    {
+        return $this->lat;
+    }
+
+    /**
+     * @param mixed $lat
+     */
+    public function setLat($lat): void
+    {
+        $this->lat = $lat;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLng()
+    {
+        return $this->lng;
+    }
+
+    /**
+     * @param mixed $lng
+     */
+    public function setLng($lng): void
+    {
+        $this->lng = $lng;
+    }
+
+
+    /**
      * @return mixed
      */
     public function getId()
