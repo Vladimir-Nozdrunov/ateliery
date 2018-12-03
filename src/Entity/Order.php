@@ -48,6 +48,11 @@ class Order
     protected $department;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Status")
+     */
+    protected $status;
+
+    /**
      * @ORM\Column(type="string", nullable=true)
      */
     protected $lat;
@@ -63,10 +68,27 @@ class Order
     protected $address;
 
 
-    public function __construct($user)
+    public function __construct($user, $status)
     {
         $this->client = $user;
+        $this->status = $status;
         $this->createdAt = new \DateTime;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status): void
+    {
+        $this->status = $status;
     }
 
     /**

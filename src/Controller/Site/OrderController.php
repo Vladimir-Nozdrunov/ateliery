@@ -34,7 +34,9 @@ class OrderController extends BaseController
      */
     public function new(Request $request)
     {
-        $order = new Order($this->getUser());
+        $status = $this->em->getRepository(Status::class)->findOneBy(['alias' => 'open']);
+
+        $order = new Order($this->getUser(), $status);
         $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);
 
@@ -66,27 +68,27 @@ class OrderController extends BaseController
 
             $this->em->persist($client);
 
-            if($form->get('self_delivery')->getData() !== true){
+            if($form->get('self_delivery')->getData() == true){
+
+                $managers = $this->em->getRepository(User::class)->findBy(['roles' => 'ROLE_MANAGER']);
+
+                $managerId = $managers[0];
+
+                $assignee = $this->em->getRepository(User::class)->find($managerId);
+
+            } else {
                 $couriers = $this->em->getRepository(User::class)->findBy(['department' => $departmentId, 'roles' => 'ROLE_COURIER']);
 
                 foreach ($couriers as $courier){
                     $tasks[$courier->getId()][] = $courier->getOrder();
                 }
 
-                $courierId = array_keys($data, min($data));
+                $courierId = array_keys($tasks, min($tasks));
 
                 $courierId = $courierId[0];
 
                 $assignee = $this->em->getRepository(User::class)->find($courierId);
-
-                $order->setAssignee($assignee);
             }
-
-            $managers = $this->em->getRepository(User::class)->findBy(['roles' => 'ROLE_MANAGER']);
-
-            $managerId = $managers[0];
-
-            $assignee = $this->em->getRepository(User::class)->find($managerId);
 
             $order->setAssignee($assignee);
 

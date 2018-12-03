@@ -6,29 +6,29 @@
 
     <div class="col-md-12">
         <h1>Мои заказы</h1>
-        <table class="table centered table-striped">
+        <table class="table centered text-center table-striped">
+            <thead>
+            <tr>
+                <th class="text-center">Номер #</th>
+                <th class="text-center">Создан</th>
+                <th class="text-center">Информация</th>
+                <th class="text-center">Отделение</th>
+                <th class="text-center">Будет выполнен</th>
+            </tr>
+            </thead>
             <tbody>
             {% for order in orders %}
-            <tr>
-                <th>Номер #</th>
-                <td>{{ order.id+54 }}</td>
-            </tr>
-            <tr>
-                <th>Создан</th>
-                <td>{{ order.createdAt|date('H:i / d.m.Y') }}</td>
-            </tr>
-            <tr>
-                <th>Информация</th>
-                <td>{{ order.info }}</td>
-            </tr>
-            <tr>
-                <th>Отделение</th>
-                <td>{{ order.department }}</td>
-            </tr>
-            <tr>
-                <th>Будет выполнен</th>
-                <td>{{ order.dueDate|date('H:i / d.m.Y') }}</td>
-            </tr>
+                <tr>
+                    <td>{{ order.id+54 }}</td>
+                    <td>{{ order.createdAt|date('H:i / d.m.Y') }}</td>
+                    <td>{{ order.info }}</td>
+                    <td>{{ order.department.address }}</td>
+                    <td>{{ order.dueDate|date('H:i / d.m.Y') }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8">Записи не найдены</td>
+                </tr>
             {% endfor %}
             </tbody>
         </table>
