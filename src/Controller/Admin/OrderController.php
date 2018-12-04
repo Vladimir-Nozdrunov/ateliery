@@ -65,6 +65,8 @@ class OrderController extends BaseController
         $this->em->persist($ticket);
         $this->em->flush();
 
+        $this->activity->saveActivity("Перевел заказ (#{$order->getId()}) в статус тикета(#{$ticket->getId()})", null);
+
         return $this->index();
     }
 }

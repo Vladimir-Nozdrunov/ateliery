@@ -36,6 +36,8 @@ class CommentController extends BaseController
             $this->em->persist($comment);
             $this->em->flush();
 
+            $this->activity->saveActivity("Добавил комментарий к тикету #{$ticket->getId()}", null);
+
             return $this->redirectToRoute('ticket_show', ['id' => $ticketId]);
         }
 
@@ -54,8 +56,12 @@ class CommentController extends BaseController
     {
         $comment = $this->em->getRepository(Comment::class)->find($id);
 
+        $ticket = $comment->getTicket();
+
         $this->em->remove($comment);
         $this->em->flush();
+
+        $this->activity->saveActivity("Удалил комментарий в тикете #{$ticket->getId()}", null);
 
         return $this->redirectToRoute('ticket_show', ['id' => $comment->getTicket()->getId()]);
     }

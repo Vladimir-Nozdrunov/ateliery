@@ -35,6 +35,8 @@
         </tbody>
     </table>
 
-    <a class="btn btn-success" title="Добавить" href="{{ path('department_new') }}"><i class="material-icons">add</i></a>
+    {% if role == "ROLE_ADMIN" %}
+        <a class="btn btn-success" title="Добавить" href="{{ path('department_new') }}"><i class="material-icons">add</i></a>
+    {% endif %}
 
 {% endblock %}

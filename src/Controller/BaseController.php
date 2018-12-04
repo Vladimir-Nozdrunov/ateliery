@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Activity;
+use App\Service\ActivityService;
 use App\Service\Haversine;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -11,11 +12,13 @@ class BaseController extends Controller
 {
     protected $em;
     protected $haversin;
+    protected $activity;
 
-    public function __construct(EntityManagerInterface $em, Haversine $haversin)
+    public function __construct(EntityManagerInterface $em, Haversine $haversin, ActivityService $activity)
     {
         $this->em = $em;
         $this->haversin = $haversin;
+        $this->activity = $activity;
     }
 
     public function getRole()

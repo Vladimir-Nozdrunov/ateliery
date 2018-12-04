@@ -48,6 +48,8 @@ class DepartmentController extends BaseController
             $em->persist($department);
             $em->flush();
 
+            $this->activity->saveActivity("Создал новое отделение - {$department->getAddress()}", null);
+
             return $this->redirectToRoute('department_index');
         }
 
@@ -84,6 +86,8 @@ class DepartmentController extends BaseController
 
             $this->getDoctrine()->getManager()->flush();
 
+            $this->activity->saveActivity("Редактировал отделение - {$department->getAddress()}", null);
+
             return $this->redirectToRoute('department_index', ['id' => $department->getId()]);
         }
 
@@ -100,10 +104,12 @@ class DepartmentController extends BaseController
      */
     public function remove($id)
     {
-        $ticket = $this->get('doctrine')->getRepository(Department::class)->find($id);
+        $department = $this->get('doctrine')->getRepository(Department::class)->find($id);
 
-        $this->em->remove($ticket);
+        $this->em->remove($department);
         $this->em->flush();
+
+        $this->activity->saveActivity("Удалил отделение - {$department->getAddress()}", null);
 
         return $this->redirectToRoute('ticket_index');
     }

@@ -53,6 +53,8 @@ class UserController extends BaseController
             $this->em->persist($user);
             $this->em->flush();
 
+            $this->activity->saveActivity("Создал пользователя {$user->getFullName()}", null);
+
             return $this->redirectToRoute('user_index');
         }
 
@@ -99,6 +101,8 @@ class UserController extends BaseController
 
             $this->getDoctrine()->getManager()->flush();
 
+            $this->activity->saveActivity("Редактировал пользователя {$user->getFullName()}", null);
+
             return $this->redirectToRoute('user_index', ['id' => $user->getId()]);
         }
 
@@ -122,6 +126,7 @@ class UserController extends BaseController
         $this->em->persist($user);
         $this->em->flush();
 
+        $this->activity->saveActivity("Удалил пользователя {$user->getFullName()}", null);
 
         return $this->redirectToRoute('user_index');
     }

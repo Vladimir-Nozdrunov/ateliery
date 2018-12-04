@@ -76,6 +76,9 @@ class TicketController extends BaseController
             $this->em->persist($ticket);
             $this->em->flush();
 
+            $this->activity->saveActivity("Создал тикет #{$ticket->getId()}", null);
+
+
             return $this->redirectToRoute('ticket_index');
         }
 
@@ -141,6 +144,8 @@ class TicketController extends BaseController
             $this->em->persist($ticket);
             $this->em->flush();
 
+            $this->activity->saveActivity("Редактировал тикет #{$ticket->getId()}", null);
+
             return $this->redirectToRoute('ticket_index');
         }
 
@@ -160,6 +165,7 @@ class TicketController extends BaseController
         $ticket = $this->get('doctrine')->getRepository(Ticket::class)->find($id);
 
         $this->em->remove($ticket);
+        $this->activity->saveActivity("Удалил тикет #{$ticket->getId()}", null);
         $this->em->flush();
 
         $fileSystem = new Filesystem();
@@ -191,6 +197,8 @@ class TicketController extends BaseController
         $this->em->persist($ticket);
 
         $this->em->flush();
+
+        $this->activity->saveActivity("Изменил статус тикета #{$ticket->getId()}", null);
 
         return $this->show($ticket);
     }
